@@ -1,4 +1,7 @@
-// Translate Neflix Captions Using the Google Translate API.
+// ==UserScript==
+// @name         universalTranslator.js
+// @match        https://www.netflix.com/watch/*
+// ==/UserScript==
 
 (function initTranslator (key, langdst) {
   var url = 'https://translation.googleapis.com/language/translate/v2'
