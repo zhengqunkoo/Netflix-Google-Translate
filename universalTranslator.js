@@ -8,10 +8,6 @@
     return s.replace(/[^a-z0-9]/gi, '')
   }
 
-  function getSubtitleObj () {
-    return document.getElementsByClassName('player-timedtext-text-container')[0]
-  }
-
   function setSubtitleText (elem, text) {
     for (var i = 0; i < elem.children.length; i++) {
       elem.children[i].innerText = ''
@@ -55,9 +51,8 @@
 
   var lastSet = ''
   var processing = false
-  function checkCaptions () {
-    var subtitles = getSubtitleObj()
-    if (!subtitles || processing || makeSafe(lastSet) === makeSafe(subtitles.innerText)) {
+  function checkCaptions (subtitles) {
+    if (processing || makeSafe(lastSet) === makeSafe(subtitles.innerText)) {
       return
     }
     if (subtitles.innerText === '') {
@@ -77,9 +72,38 @@
       setSubtitleText(subtitles, toSet)
     })
   }
-  var procNum = setInterval(checkCaptions, 10)
+
+  function setupObserver () {
+    var target = document.getElementsByClassName('player-timedtext')[0]
+    if (!target) {
+      console.log('netflix-translate: waiting for first caption...')
+      window.setTimeout(setupObserver, 1000)
+      return
+    }
+
+    var config = {
+      childList: true
+    }
+
+    var callback = function (mutations) {
+      mutations.forEach((mutation) => {
+        switch (mutation.type) {
+          case 'childList':
+            if (mutation.addedNodes.length) {
+              checkCaptions(mutation.addedNodes[0])
+            }
+            break
+        }
+      })
+    }
+
+    var observer = new MutationObserver(callback)
+    console.log('netflix-translate: observing captions...')
+    observer.observe(target, config)
+  }
+
+  setupObserver()
   console.log('netflix-translate from ' + langsrc + ' to ' + langdst)
-  console.log('You can kill the translator using \'clearInterval(' + procNum + ')\'')
 })('https://translation.googleapis.com/language/translate/v2',
   '<API_KEY>',
   '<2_LETTER_LANG_CODE_SRC>',
