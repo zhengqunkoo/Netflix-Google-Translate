@@ -1,7 +1,7 @@
 // Translate Neflix Captions Using the Google Translate API.
 
 (function initTranslator (key, langdst) {
-  var url = 'https://translation.googleapis.com/language/translate/v2?key=' + key
+  var url = 'https://translation.googleapis.com/language/translate/v2'
 
   function makeSafe (s) {
     return s.replace(/[^a-z0-9]/gi, '')
@@ -18,22 +18,37 @@
     elem.children[0].innerText = text
   }
 
+  function postData (data) {
+    return fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: data
+    }).then(response => response.json())
+  }
+
   // Cache lets us handle common statements without lookup costs.
   var cache = {}
   function translateCaption (text, done) {
     if (cache[text]) return done(null, cache[text])
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.open('POST', url)
-    xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState === 4) {
-        var translated = JSON.parse(xmlhttp.response).data.translations[0].translatedText
+
+    var data = new URLSearchParams()
+    data.append('key', key)
+    data.append('q', text.replace(/[\r\n]/g, '<br>'))
+    data.append('target', langdst)
+
+    postData(data)
+      .then(data => {
+        var translated = data.data.translations[0].translatedText
         translated = translated.replace(/<br>/g, '\n')
         cache[text] = translated
         done(null, cache[text])
-      }
-    }
-    xmlhttp.send(JSON.stringify({ q: text.replace(/[\r\n]/g, '<br>'), target: langdst }))
+      })
+      .catch(error =>
+        console.log('Error: netflix-translate: ' + error)
+      )
   }
 
   var lastSet = ''
