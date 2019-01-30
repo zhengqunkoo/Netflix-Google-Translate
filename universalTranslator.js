@@ -42,6 +42,8 @@
         var translated = data.data.translations[0].translatedText
         translated = translated.replace(/<br>/g, '\n')
         cache[text] = translated
+        // TODO Uncomment to log translated text
+        //console.log(translated)
         done(null, cache[text])
       })
       .catch(error =>
