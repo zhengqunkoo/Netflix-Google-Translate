@@ -3,7 +3,7 @@
 // @match        https://www.netflix.com/watch/*
 // ==/UserScript==
 
-(function initTranslator (url, key, langdst) {
+(function initTranslator (url, key, langsrc, langdst) {
   function makeSafe (s) {
     return s.replace(/[^a-z0-9]/gi, '')
   }
@@ -38,6 +38,7 @@
     var data = new URLSearchParams()
     data.append('key', key)
     data.append('q', text.replace(/[\r\n]/g, '<br>'))
+    data.append('source', langsrc)
     data.append('target', langdst)
 
     postData(data)
@@ -77,8 +78,9 @@
     })
   }
   var procNum = setInterval(checkCaptions, 10)
-  console.log('System Online; Translating to "' + langdst + '"')
+  console.log('netflix-translate from ' + langsrc + ' to ' + langdst)
   console.log('You can kill the translator using \'clearInterval(' + procNum + ')\'')
 })('https://translation.googleapis.com/language/translate/v2',
   '<API_KEY>',
-  '<2_LETTER_LANG_CODE>')
+  '<2_LETTER_LANG_CODE_SRC>',
+  '<2_LETTER_LANG_CODE_DST>')

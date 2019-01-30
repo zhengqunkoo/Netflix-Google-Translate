@@ -9,8 +9,9 @@ If I see more usage I'll turn this into a chrome plugin.
 ## Usage:
 
 1. Populate API key in `universalTranslator.js`
-2. Choose 2 letter language code for target language
-3. Copy javascript into the developer console while on the netflix site.
+2. Choose 2 letter language code for source language
+3. Choose 2 letter language code for target language
+4. Copy javascript into the developer console while on the netflix site.
 
 Note: this will cost a small amount of money to use (Based on the translation rates provided by google)
 
