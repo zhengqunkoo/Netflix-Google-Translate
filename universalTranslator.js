@@ -4,6 +4,10 @@
 // ==/UserScript==
 
 (function initTranslator (url, key, langsrc, langdst) {
+
+  var content = content || {}
+  content.fetch = fetch
+
   function makeSafe (s) {
     return s.replace(/[^a-z0-9]/gi, '')
   }
@@ -16,7 +20,7 @@
   }
 
   function postData (data) {
-    return fetch(url, {
+    return content.fetch(url, {
       method: 'POST',
       mode: 'cors',
       headers: {
