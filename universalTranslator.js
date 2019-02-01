@@ -93,7 +93,8 @@
     }
 
     var config = {
-      childList: true
+      'childList': true,
+      'attributes': true
     }
 
     var callback = function (mutations) {
@@ -102,6 +103,12 @@
           case 'childList':
             if (mutation.addedNodes.length) {
               checkCaptions(mutation.addedNodes[0])
+            }
+            break
+          case 'attributes':
+            var node = target.children[0]
+            if (node) {
+              checkCaptions(node)
             }
             break
         }
