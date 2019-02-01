@@ -84,11 +84,11 @@
     })
   }
 
-  function setupObserver () {
-    var target = document.getElementsByClassName('player-timedtext')[0]
+  function setupObserver (classname) {
+    var target = document.getElementsByClassName(classname)[0]
     if (!target) {
-      console.log('netflix-translate: waiting for first caption...')
-      window.setTimeout(setupObserver, 1000)
+      console.log('netflix-translate: waiting for ' + classname)
+      window.setTimeout(setupObserver, 1000, classname)
       return
     }
 
@@ -109,11 +109,11 @@
     }
 
     var observer = new MutationObserver(callback)
-    console.log('netflix-translate: observing captions...')
+    console.log('netflix-translate: observing ' + classname)
     observer.observe(target, config)
   }
 
-  setupObserver()
+  setupObserver('player-timedtext')
   console.log('netflix-translate from ' + langsrc + ' to ' + langdst)
 })('https://translation.googleapis.com/language/translate/v2',
   '<API_KEY>',
