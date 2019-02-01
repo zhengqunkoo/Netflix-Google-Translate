@@ -4,7 +4,6 @@
 // ==/UserScript==
 
 (function initTranslator (url, key, langsrc, langdst) {
-
   var content = content || {}
   content.fetch = fetch
 
@@ -27,7 +26,13 @@
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: data
-    }).then(response => response.json())
+    })
+      .then(response =>
+        response.json()
+      )
+      .catch(error =>
+        console.log('Error: netflix-translate: ' + error)
+      )
   }
 
   // Cache lets us handle common statements without lookup costs.
