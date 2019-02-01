@@ -33,7 +33,7 @@
   // Cache lets us handle common statements without lookup costs.
   var cache = {}
   function translateCaption (text, done) {
-    if (cache[text]) return done(null, cache[text])
+    if (cache[text]) return done(cache[text])
 
     var data = new URLSearchParams()
     data.append('key', key)
@@ -48,7 +48,7 @@
         cache[text] = translated
         // TODO Uncomment to log translated text
         //console.log(translated)
-        done(null, cache[text])
+        done(cache[text])
       })
       .catch(error =>
         console.log('Error: netflix-translate: ' + error)
@@ -72,7 +72,7 @@
 
     // Mutex to prevent multiple requests
     processing = true
-    translateCaption(text, function (err, toSet) {
+    translateCaption(text, function (toSet) {
       processing = false
       lastSet = toSet
       setSubtitleText(subtitles, toSet)
