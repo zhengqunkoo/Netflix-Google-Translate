@@ -52,7 +52,7 @@
         translated = translated.replace(/<br>/g, '\n')
         cache[text] = translated
         // TODO Uncomment to log translated text
-        //console.log(translated)
+        // console.log(translated)
         done(cache[text])
       })
       .catch(error =>
