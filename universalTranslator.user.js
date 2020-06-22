@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         universalTranslator.js
+// @name         universalTranslator.user.js
 // @match        https://www.netflix.com/watch/*
 // ==/UserScript==
 
