@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>README.md - Grip</title>
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  README.md
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-netflix-translate" class="anchor" href="#netflix-translate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Netflix Translate</h1>
+<p>Adapted from <a href="https://github.com/Andr3wHur5t/Netflix-Google-Translate">Andr3wHur5t/Netflix-Google-Translate</a>.</p>
+<p>Wrapped in a Mozilla Firefox addon.</p>
+<h2>
+<a id="user-content-usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+<ol>
+<li>Find a translation provider with a REST API.</li>
+<li>Configure <code>netflix-translate</code> settings to call that REST API. Open up the options page, by either clicking on the <code>netflix-translate</code> icon in the toolbar, or going to the <code>addons</code> page, and clicking <code>Preferences</code> under <code>netflix-translate</code>.</li>
+</ol>
+<ul>
+<li>
+<code>url</code>: URL of that REST API, excluding the API parameters.</li>
+<li>
+<code>key</code>: API key.</li>
+<li>
+<code>langsrc</code>: source language.</li>
+<li>
+<code>langdst</code>: destination language.</li>
+<li>
+<code>urlform</code>: This is where users can configure the API call 
+parameters. Users need to configure this, because API parameters differ 
+from provider to provider. A default value for <code>Google</code>'s translation API has been provided as an example. <code>urlform</code> is a JSON object, where:
+<ul>
+<li>keys: API parameter names.</li>
+<li>values: API parameter values, but each must be some combination of 
+the following strings, interleaved with some special characters. The 
+purpose of this is for the user to combine the values in the settings, 
+to make the values in the API call.
+<ul>
+<li><code>url</code></li>
+<li><code>key</code></li>
+<li><code>langsrc</code></li>
+<li><code>langdst</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Changes are automatically stored. Press <code>Esc</code> or click outside the popup to close the popup.</li>
+</ol>
+<p>TODO:</p>
+<ul>
+<li>Adapt to Yandex.Translate and comply with Yandex's <a href="https://tech.yandex.com/translate/doc/dg/concepts/design-requirements-docpage/" rel="nofollow">requirements</a>.</li>
+<li>Call REST API while preserving newlines in captions. Issues:
+<ul>
+<li>Substituting newlines with <code>&lt;br&gt;</code> sometimes gives residues, like <code>&lt;&gt;</code> or <code>&lt; br / </code>, and can affect the actual captions too.</li>
+<li>Calling REST API once per caption line may not get the whole context, and cause more literal and less accurate translations.</li>
+</ul>
+</li>
+<li>Call REST API once per <code>player-timed-text-container</code> loses context.</li>
+<li>Change <code>&lt;all_urls&gt;</code> <code>permissions</code> into <code>optional_permissions</code>, where the latest version of each big translation provider is listed in the manifest, and <code>netflix-translate</code> prompts the user to allow <code>CORS</code> requests to those translation providers, only when the user puts those URLs in <code>url</code> setting.
+<ul>
+<li>Consider changing <code>url</code> setting to dropdown list.</li>
+</ul>
+</li>
+<li>Mousing over the video causes a re-<code>fetch</code>, even though 
+the caption content appears to be the same, therefore should be cached. 
+This is because the caption content is actually different: newlines are 
+missing, therefore misses the cache. This is probably because setting 
+caption content sets all <code>span</code>s to empty strings, then when Netflix's code interacts with the captions, it only fills in the top <code>span</code> with text. TODO: Need to see how Netflix performs without the extension.</li>
+<li>Auto-generate landing page from description.</li>
+<li>Throw errors in console when URLSearchParams is malformed, or when JSON parses wrongly.</li>
+</ul>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div>
+</body>
+</html>

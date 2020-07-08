@@ -1,0 +1,42 @@
+{
+  "background": {
+    "scripts": [
+      "/js/background.js"
+    ]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{ca4e40cf-10b5-41aa-b413-1138fa198355}"
+    }
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "icons/icon.svg",
+    "default_popup": "/html/options.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "/js/universalTranslator.user.js"
+      ],
+      "matches": [
+        "*://*.netflix.com/*"
+      ]
+    }
+  ],
+  "description": "Translate Netflix captions.",
+  "icons": {
+    "64": "icons/icon.svg"
+  },
+  "manifest_version": 2,
+  "name": "netflix-translate",
+  "options_ui": {
+    "page": "/html/options.html"
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "<all_urls>"
+  ],
+  "version": "0.0.1"
+}
