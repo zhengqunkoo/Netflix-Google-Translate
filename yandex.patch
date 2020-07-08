@@ -1,0 +1,30 @@
+diff --git a/universalTranslator.user.js b/universalTranslator.user.js
+index d58e8a3..497a0a3 100644
+--- a/universalTranslator.user.js
++++ b/universalTranslator.user.js
+@@ -42,13 +42,12 @@
+ 
+     var data = new URLSearchParams()
+     data.append('key', key)
+-    data.append('q', text.replace(/[\r\n]/g, '<br>'))
+-    data.append('source', langsrc)
+-    data.append('target', langdst)
++    data.append('text', text.replace(/[\r\n]/g, '<br>'))
++    data.append('lang', langsrc+'-'+langdst)
+ 
+     postData(data)
+       .then(data => {
+-        var translated = data.data.translations[0].translatedText
++        var translated = data.text[0]
+         translated = translated.replace(/<br>/g, '\n')
+         cache[text] = translated
+         // TODO Uncomment to log translated text
+@@ -122,7 +121,7 @@
+ 
+   setupObserver('player-timedtext')
+   console.log('netflix-translate from ' + langsrc + ' to ' + langdst)
+-})('https://translation.googleapis.com/language/translate/v2',
++})('https://translate.yandex.net/api/v1.5/tr.json/translate',
+   '<API_KEY>',
+   '<2_LETTER_LANG_CODE_SRC>',
+   '<2_LETTER_LANG_CODE_DST>')
